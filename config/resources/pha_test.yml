@@ -1,0 +1,9 @@
+phabricator:
+    endpoint: https://domain.example
+    token: cli-34567890
+
+jenkins:
+    endpoint: https://ci-jenkins
+    username: example
+    token: 34567890
+    pipeline: "testingJenkins" # Pipeline by default 
