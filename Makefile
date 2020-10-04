@@ -12,6 +12,7 @@ install:
 	cp bin/contributions $$DESTDIR
 
 build:
+	 go get -v -t -d ./...
 	 go build -o bin/contributions cmd/*
 
 run:
