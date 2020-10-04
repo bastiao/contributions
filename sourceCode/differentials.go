@@ -9,7 +9,7 @@ import (
 
 type differentialRequest struct {
 	Status           string `json:"status"`
-	IDs              string `json:"id"`
+	IDs              []int  `json:"ids"`
 	requests.Request        // Includes __conduit__ field needed for authentication.
 }
 
@@ -35,10 +35,11 @@ func LookForDifferential(client *gonduit.Conn) []DifferentialResponse {
 	return res
 }
 
-func LookForDifferentialById(client *gonduit.Conn, revision string) []DifferentialResponse {
+func LookForDifferentialById(client *gonduit.Conn, revision int) DifferentialResponse {
 	status := "status-open"
 	req := &differentialRequest{
 		Status: status,
+		IDs:    []int{revision},
 	}
 	var res []DifferentialResponse
 
@@ -46,5 +47,5 @@ func LookForDifferentialById(client *gonduit.Conn, revision string) []Differenti
 	if err1 != nil {
 		log.Fatal("Error: ", err1)
 	}
-	return res
+	return res[0]
 }

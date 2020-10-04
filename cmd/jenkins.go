@@ -11,7 +11,7 @@ func JenkinsAction(confFile *config.ConfGoPath,
 	jenkinsBranch *string,
 	jenkinsRepo *string,
 	jenkinsParams *string,
-	revision *string) {
+	revision *int) {
 	fmt.Println("\n ⭐ Starting pha-go with jenkins command.")
 	fmt.Println("\t List: ", *jenkinsBranch)
 	fmt.Println("\t Watch: ", *jenkinsRepo)

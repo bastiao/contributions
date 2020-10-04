@@ -7,7 +7,10 @@ import (
 	"time"
 
 	"github.com/bastiao/contributions/config"
+	"github.com/bastiao/contributions/sourceCode"
 	"github.com/bndr/gojenkins"
+	"github.com/uber/gonduit"
+	"github.com/uber/gonduit/core"
 )
 
 // This module do the integration with
@@ -15,14 +18,27 @@ import (
 // The results will also be available in phabricator.
 
 //func StartPipeline(string endpoint, string username, string token, string pipeline) {
-func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRepo string, paramsStr string, revision string) {
+func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRepo string,
+	paramsStr string, revision int) {
 	jenkins := gojenkins.CreateJenkins(nil, confFile.PhaJenkins.Endpoint,
 		confFile.PhaJenkins.Username, confFile.PhaJenkins.Token)
 	// Provide CA certificate if server is using self-signed certificate
 	// caCert, _ := ioutil.ReadFile("/tmp/ca.crt")
 	// jenkins.Requester.CACert = caCert
 
-	fmt.Println(jenkinsBranch, jenkinsRepo, revision)
+	branchParam := ""
+	if revision != 0 {
+		client, err := gonduit.Dial(confFile.PhaConf.Endpoint,
+			&core.ClientOptions{APIToken: confFile.PhaConf.Token})
+		_ = err
+		client.Connect()
+		diff := sourceCode.LookForDifferentialById(client, revision)
+		if diff.Branch != "" {
+			branchParam := diff.Branch
+			fmt.Println("\n\t⏲ - Branch changed: ", branchParam)
+		}
+
+	}
 
 	jenkins.Init()
 	build, err := jenkins.GetJob(confFile.PhaJenkins.Pipeline)
@@ -68,6 +84,10 @@ func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRep
 		sTmp := strings.Split(s, "=")
 		paramsDynamic[sTmp[0]] = sTmp[1]
 	}
+	if jenkinsBranch != "" {
+		paramsDynamic[jenkinsBranch] = branchParam
+	}
+
 	fmt.Println("\n🎃 Current build:")
 	fmt.Println()
 	fmt.Println()

@@ -19,7 +19,8 @@ func main() {
 
 	jenkinsCmd := flag.NewFlagSet("jenkins", flag.ExitOnError)
 	jenkinsBranch := jenkinsCmd.String("branch", "", "")
-	revision := jenkinsCmd.String("revision", "", "")
+
+	revision := jenkinsCmd.Int("revision", 0, "")
 	jenkinsRepo := jenkinsCmd.String("repo", "", "")
 	jenkinsParams := jenkinsCmd.String("params-ci", "", "")
 
