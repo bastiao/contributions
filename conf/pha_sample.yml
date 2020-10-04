@@ -1,6 +1,7 @@
 phabricator:
     endpoint: https://domain.example
     token: cli-34567890
+    repo: repo01 #example
 
 jenkins:
     endpoint: https://ci-jenkins

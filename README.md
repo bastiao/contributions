@@ -25,5 +25,5 @@ PHA_ARGS="arc" make run
 ```
 
 ```
-PHA_ARGS="jenkins --branch=test/T1234 --params-ci=linux_agent=local01 --repo=example01" make run
+PHA_ARGS="jenkins --branch=branch_example_param --params-ci=linux_agent=local01 --repo=example01 --revision=D100" make run
 ```

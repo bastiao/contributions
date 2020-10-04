@@ -13,7 +13,7 @@ import (
 // Manage the options for differential / arcanist requests
 
 func ShowArc(confFile *config.ConfGoPath, arcList *bool, arcWatch *bool, arcParams *string) {
-	fmt.Println("\n ⭐ Starting pha-go with arc command.")
+	fmt.Println("\n⭐ Starting pha-go with arc command.")
 	fmt.Println("\t List: ", *arcList)
 	fmt.Println("\t Watch: ", *arcWatch)
 	fmt.Println("\t Params: ", *arcParams)

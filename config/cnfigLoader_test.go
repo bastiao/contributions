@@ -11,6 +11,7 @@ func TestGetLoading(t *testing.T) {
 	confFile.FromFile("resources/pha_test.yml")
 	assert.Equal(t, confFile.PhaConf.Endpoint, "https://domain.example", "The params should be the same.")
 	assert.Equal(t, confFile.PhaConf.Token, "cli-34567890", "The params should be the same.")
+	assert.Equal(t, confFile.PhaConf.Repo, "repo01", "The params should be the same.")
 	assert.Equal(t, confFile.PhaJenkins.Endpoint, "https://ci-jenkins", "The params should be the same.")
 	assert.Equal(t, confFile.PhaJenkins.Username, "example", "The params should be the same.")
 	assert.Equal(t, confFile.PhaJenkins.Token, "34567890", "The params should be the same.")

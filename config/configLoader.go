@@ -14,6 +14,7 @@ import (
 type ConfPha struct {
 	Endpoint string `yaml:"endpoint"`
 	Token    string `yaml:"token"`
+	Repo     string `yaml:"repo"`
 }
 type ConfJenkins struct {
 	Endpoint string `yaml:"endpoint"`

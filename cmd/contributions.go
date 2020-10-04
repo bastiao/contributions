@@ -10,7 +10,6 @@ import (
 
 // This is the main module and CLI to access all funcionality available
 // Global idea is to check differentials changes and send them to CI.
-
 func main() {
 
 	arcCmd := flag.NewFlagSet("arc", flag.ExitOnError)
@@ -20,6 +19,7 @@ func main() {
 
 	jenkinsCmd := flag.NewFlagSet("jenkins", flag.ExitOnError)
 	jenkinsBranch := jenkinsCmd.String("branch", "", "")
+	revision := jenkinsCmd.String("revision", "", "")
 	jenkinsRepo := jenkinsCmd.String("repo", "", "")
 	jenkinsParams := jenkinsCmd.String("params-ci", "", "")
 
@@ -42,7 +42,7 @@ func main() {
 
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
-		JenkinsAction(&confFile, jenkinsBranch, jenkinsRepo, jenkinsParams)
+		JenkinsAction(&confFile, jenkinsBranch, jenkinsRepo, jenkinsParams, revision)
 
 	default:
 		fmt.Println("Error: not available.")

@@ -15,12 +15,15 @@ import (
 // The results will also be available in phabricator.
 
 //func StartPipeline(string endpoint, string username, string token, string pipeline) {
-func StartPipeline(confFile *config.ConfGoPath, paramsStr string) {
+func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRepo string, paramsStr string, revision string) {
 	jenkins := gojenkins.CreateJenkins(nil, confFile.PhaJenkins.Endpoint,
 		confFile.PhaJenkins.Username, confFile.PhaJenkins.Token)
 	// Provide CA certificate if server is using self-signed certificate
 	// caCert, _ := ioutil.ReadFile("/tmp/ca.crt")
 	// jenkins.Requester.CACert = caCert
+
+	fmt.Println(jenkinsBranch, jenkinsRepo, revision)
+
 	jenkins.Init()
 	build, err := jenkins.GetJob(confFile.PhaJenkins.Pipeline)
 	if err != nil {
