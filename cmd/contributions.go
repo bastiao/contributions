@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bastiao/phago/config"
+	"github.com/bastiao/contributions/config"
 )
 
 // This is the main module and CLI to access all funcionality available

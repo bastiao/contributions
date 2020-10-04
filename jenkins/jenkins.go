@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bastiao/phago/config"
+	"github.com/bastiao/contributions/config"
 	"github.com/bndr/gojenkins"
 )
 

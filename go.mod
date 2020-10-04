@@ -1,4 +1,4 @@
-module github.com/bastiao/phago
+module github.com/bastiao/contributions
 
 go 1.14
 

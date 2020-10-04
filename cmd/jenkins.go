@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/bastiao/phago/config"
-	"github.com/bastiao/phago/jenkins"
+	"github.com/bastiao/contributions/config"
+	"github.com/bastiao/contributions/jenkins"
 )
 
 func JenkinsAction(confFile *config.ConfGoPath,

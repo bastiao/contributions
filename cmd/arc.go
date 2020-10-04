@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bastiao/phago/config"
-	"github.com/bastiao/phago/sourceCode"
+	"github.com/bastiao/contributions/config"
+	"github.com/bastiao/contributions/sourceCode"
 	"github.com/uber/gonduit"
 	"github.com/uber/gonduit/core"
 )
