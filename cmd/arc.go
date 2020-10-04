@@ -39,7 +39,7 @@ func showArcMethod(confFile *config.ConfGoPath, arcList *bool, arcWatch *bool, a
 	client.Connect()
 
 	lstDiff := sourceCode.LookForDifferential(client)
-	fmt.Println("\n\n🎆 Open or pending differentials:\n\n")
+	fmt.Println("\n\n🎆 Open or pending differentials:")
 
 	for _, v := range lstDiff {
 

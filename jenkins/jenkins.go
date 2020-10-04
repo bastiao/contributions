@@ -33,7 +33,9 @@ func StartPipeline(confFile *config.ConfGoPath, paramsStr string) {
 
 	fmt.Println("\n🏃 Jenkins mode.")
 
-	fmt.Println("\n🙅 Jenkins Nodes:\n\n")
+	fmt.Println("\n🙅 Jenkins Nodes:")
+	fmt.Println()
+
 	nodes, _ := jenkins.GetAllNodes()
 
 	for _, node := range nodes {
@@ -48,7 +50,9 @@ func StartPipeline(confFile *config.ConfGoPath, paramsStr string) {
 		}
 	}
 
-	fmt.Println("\n🎃 Latest job:\n\n")
+	fmt.Println("\n🎃 Latest job:")
+	fmt.Println()
+	fmt.Println()
 
 	duration := lastSuccessBuild.GetDuration()
 	fmt.Println("\t - Last Success Build: ", lastSuccessBuild.GetParameters())
@@ -61,7 +65,10 @@ func StartPipeline(confFile *config.ConfGoPath, paramsStr string) {
 		sTmp := strings.Split(s, "=")
 		paramsDynamic[sTmp[0]] = sTmp[1]
 	}
-	fmt.Println("\n🎃 Current build:\n\n")
+	fmt.Println("\n🎃 Current build:")
+	fmt.Println()
+	fmt.Println()
+
 	id, _ := jenkins.BuildJob(confFile.PhaJenkins.Pipeline, paramsDynamic)
 	fmt.Println("\t 📕 Jenkins Build Id: ", id)
 	task, err := jenkins.GetQueueItem(id)
