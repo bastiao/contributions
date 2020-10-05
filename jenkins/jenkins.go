@@ -39,13 +39,16 @@ func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRep
 		}
 
 	}
-
+	log.Println("Starting Jenkins..")
 	jenkins.Init()
+	log.Println("Starting Jenkins, with pipeline ", confFile.PhaJenkins.Pipeline)
 	build, err := jenkins.GetJob(confFile.PhaJenkins.Pipeline)
+	log.Println("Jenkins Build ", build)
 	if err != nil {
 		panic("Job Does Not Exist")
 	}
 	lastSuccessBuild, err := build.GetLastSuccessfulBuild()
+	log.Println("Jenkins Build ", lastSuccessBuild)
 	if err != nil {
 		panic("Last SuccessBuild does not exist")
 	}
@@ -83,6 +86,7 @@ func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRep
 	for _, s := range sParams {
 		sTmp := strings.Split(s, "=")
 		paramsDynamic[sTmp[0]] = sTmp[1]
+		log.Println(sTmp[0], sTmp[1])
 	}
 	if jenkinsBranch != "" {
 		paramsDynamic[jenkinsBranch] = branchParam
@@ -91,6 +95,7 @@ func StartPipeline(confFile *config.ConfGoPath, jenkinsBranch string, jenkinsRep
 	fmt.Println("\n🎃 Current build:")
 	fmt.Println()
 	fmt.Println()
+	fmt.Println("\t - Params: ", paramsDynamic)
 
 	id, _ := jenkins.BuildJob(confFile.PhaJenkins.Pipeline, paramsDynamic)
 	fmt.Println("\t 📕 Jenkins Build Id: ", id)
