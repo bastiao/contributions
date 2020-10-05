@@ -5,9 +5,6 @@ jobs:
     docker:
       # specify the version
       - image: cimg/go:1.13
-        auth:
-          username: $DOCKERREPO_USER
-          password: $DOCKERREPO_PASSWORD 
 
     working_directory: ~/go/src/github.com/{{ORG_NAME}}/configurations
     steps:
