@@ -8,12 +8,22 @@ usage:
 	@echo ""
 
 
+VERSION = "v0.0.1"
+
 install:
 	cp bin/contributions $$DESTDIR
 
 build:
-	 go get -v -t -d ./...
-	 go build -o bin/contributions cmd/*
+	go get -v -t -d ./...
+	go build -o bin/contributions cmd/*
+
+docker:
+	@docker build -t bastiao/contributions:$(VERSION) . \
+	&& docker tag -f bastiao/contributions:$(VERSION) bastiao/contributions::latest
+
+publish: build
+	@docker push bastiao/contributions$(VERSION) \
+	&& docker push bastiao/contributions:latest	
 
 run:
 	go run cmd/*.go $$PHA_ARGS
