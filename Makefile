@@ -21,7 +21,7 @@ docker:
 	@docker build -t cloud.canister.io:5000/bastiao/contributions:$(VERSION) .
 
 publish:
-	@docker push cloud.canister.io:5000/bastiao/contributions/contributions$(VERSION)
+	@docker push cloud.canister.io:5000/bastiao/contributions$(VERSION)
 
 run:
 	go run cmd/*.go $$PHA_ARGS
