@@ -18,12 +18,10 @@ build:
 	go build -o bin/contributions cmd/*
 
 docker:
-	@docker build -t bastiao/contributions:$(VERSION) . \
-	&& docker tag -f bastiao/contributions:$(VERSION) bastiao/contributions::latest
+	@docker build -t cloud.canister.io:5000/bastiao/contributions:$(VERSION) .
 
-publish: build
-	@docker push bastiao/contributions$(VERSION) \
-	&& docker push bastiao/contributions:latest	
+publish:
+	@docker push cloud.canister.io:5000/bastiao/contributions/contributions$(VERSION)
 
 run:
 	go run cmd/*.go $$PHA_ARGS

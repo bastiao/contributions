@@ -6,7 +6,7 @@ jobs:
       # specify the version
       - image: cimg/go:1.13
         auth:
-          username: bastiao
+          username: $DOCKERREPO_USER
           password: $DOCKERREPO_PASSWORD 
 
     working_directory: ~/go/src/github.com/{{ORG_NAME}}/configurations
@@ -16,5 +16,8 @@ jobs:
       #- run:
       #    name: Install Docker client
       #    command: apk add docker-cli
-      - run: make build && make docker
+      - run: |
+          docker login -u $DOCKERREPO_USER -p $DOCKERREPO_PASSWORD
+          make build && make docker && make publish
       - run: make test
+    
