@@ -7,26 +7,45 @@ import (
 	"github.com/uber/gonduit/requests"
 )
 
+type ConstraintsRequest struct {
+	Statuses []string `json:"statuses"`
+}
+
+type AttachmentsRequest struct {
+	Content bool `json:"content"`
+}
+
 type PhidDocumentRequest struct {
-	Constraints string `json:"constraints"`
-	Attachments string `json:"attachments"`
+	Constraints ConstraintsRequest `json:"constraints"`
+	Attachments AttachmentsRequest `json:"attachments"`
 
 	requests.Request // Includes __conduit__ field needed for authentication.
 }
-type PhidDocumentResponse map[string]*struct {
+
+type PhidDocumentResponse struct {
+	Id   int    `json:"id"`
 	Phid string `json:"phid"`
-	Id   string `json:"id"`
 }
 
-func LookForDocument(client *gonduit.Conn) []PhidDocumentResponse {
-	constraints := "{\"statuses\": [ \"active\"]}"
-	attachments := "{\"content\": true}"
+type PhidDocumentDataResponse struct {
+	Data []PhidDocumentResponse `json:"data"`
+}
+
+func LookForDocument(client *gonduit.Conn) PhidDocumentDataResponse {
+	conActive := "active"
+
+	constraints := &ConstraintsRequest{
+		Statuses: []string{conActive},
+	}
+	attachments := &AttachmentsRequest{
+		Content: true,
+	}
 
 	req := &PhidDocumentRequest{
-		Constraints: constraints,
-		Attachments: attachments,
+		Constraints: *constraints,
+		Attachments: *attachments,
 	}
-	var res []PhidDocumentResponse
+	var res PhidDocumentDataResponse
 
 	err1 := client.Call("phriction.document.search", req, &res)
 	if err1 != nil {

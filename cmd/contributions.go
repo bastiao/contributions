@@ -17,6 +17,9 @@ func main() {
 	arcWatch := arcCmd.Bool("watch", false, "false")
 	arcParams := arcCmd.String("params-ci", "", "")
 
+	documentsCmd := flag.NewFlagSet("docs", flag.ExitOnError)
+	documentsList := documentsCmd.Bool("list", false, "false")
+
 	jenkinsCmd := flag.NewFlagSet("jenkins", flag.ExitOnError)
 	jenkinsBranch := jenkinsCmd.String("branch", "", "")
 
@@ -38,8 +41,12 @@ func main() {
 	switch os.Args[1] {
 
 	case "arc":
-		arcCmd.Parse(os.Args[2:])
+		documentsCmd.Parse(os.Args[2:])
 		ShowArc(&confFile, arcList, arcWatch, arcParams)
+
+	case "docs":
+		arcCmd.Parse(os.Args[2:])
+		ShowDocuments(&confFile, documentsList)
 
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
