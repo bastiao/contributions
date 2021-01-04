@@ -22,9 +22,23 @@ type PhidDocumentRequest struct {
 	requests.Request                    // Includes __conduit__ field needed for authentication.
 }
 
+type ContentRawResponse struct {
+	Raw string `json:"raw"`
+}
+
+type ContentResponse struct {
+	Title   string             `json:"title"`
+	Content ContentRawResponse `json:"content"`
+}
+
+type AttachmentsResponse struct {
+	Content ContentResponse `json:"content"`
+}
+
 type PhidDocumentResponse struct {
-	Id   int    `json:"id"`
-	Phid string `json:"phid"`
+	Id          int                 `json:"id"`
+	Phid        string              `json:"phid"`
+	Attachments AttachmentsResponse `json:"attachments"`
 }
 
 type PhidDocumentDataResponse struct {
