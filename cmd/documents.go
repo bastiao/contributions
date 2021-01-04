@@ -11,7 +11,7 @@ import (
 
 // Manage the options for differential / arcanist requests
 
-func ShowDocuments(confFile *config.ConfGoPath, documentList *bool) {
+func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuery *string) {
 	fmt.Println("\n⭐ Starting pha-go with documents command.")
 	fmt.Println("\t List: ", *documentList)
 
@@ -23,5 +23,9 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool) {
 	_ = err
 	client.Connect()
 
-	documents.LookForDocument(client)
+	docs := documents.LookForDocument(client, documentQuery)
+	for _, v := range docs.Data {
+		fmt.Println("\t🐊 Phid: ", v.Phid)
+
+	}
 }

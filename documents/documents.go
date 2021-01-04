@@ -9,6 +9,7 @@ import (
 
 type ConstraintsRequest struct {
 	Statuses []string `json:"statuses"`
+	Query    string   `json:"query"`
 }
 
 type AttachmentsRequest struct {
@@ -16,10 +17,9 @@ type AttachmentsRequest struct {
 }
 
 type PhidDocumentRequest struct {
-	Constraints ConstraintsRequest `json:"constraints"`
-	Attachments AttachmentsRequest `json:"attachments"`
-
-	requests.Request // Includes __conduit__ field needed for authentication.
+	Constraints      ConstraintsRequest `json:"constraints"`
+	Attachments      AttachmentsRequest `json:"attachments"`
+	requests.Request                    // Includes __conduit__ field needed for authentication.
 }
 
 type PhidDocumentResponse struct {
@@ -31,11 +31,12 @@ type PhidDocumentDataResponse struct {
 	Data []PhidDocumentResponse `json:"data"`
 }
 
-func LookForDocument(client *gonduit.Conn) PhidDocumentDataResponse {
+func LookForDocument(client *gonduit.Conn, documentQuery *string) PhidDocumentDataResponse {
 	conActive := "active"
 
 	constraints := &ConstraintsRequest{
 		Statuses: []string{conActive},
+		Query:    *documentQuery,
 	}
 	attachments := &AttachmentsRequest{
 		Content: true,
