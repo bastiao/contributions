@@ -87,21 +87,29 @@ The result will be look for Jenkins and start a new job with a few parameters:
 ```
 
 
-
-
 ## How to run for development? 
 
 There are only a few examples to make life easier for development: 
 
 ### CI/Jenkins
 
+Run a specific branch in the Jenkins
 
 ```
 PHA_ARGS="jenkins --branch=branch_example_param --params-ci=linux_agent=linux04 --repo=example01 --revision=100" make run
 ```
 ### Differentals 
 
+Run in development mode: 
 
 ```
 PHA_ARGS="arc" make run
 ```
+
+
+### Documentations 
+
+This allow to check a list of studies with a specific keyword to match in the title.
+For instance, it will look for pages with keyword "Support" and stop on find the date different than "2020", and check only the titles that match P1 or P2.
+
+./bin/contributions docs --list --query="Support" --filter="2020" --match "P1|P2"
