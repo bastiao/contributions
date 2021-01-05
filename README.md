@@ -112,4 +112,6 @@ PHA_ARGS="arc" make run
 This allow to check a list of studies with a specific keyword to match in the title.
 For instance, it will look for pages with keyword "Support" and stop on find the date different than "2020", and check only the titles that match P1 or P2.
 
+```
 ./bin/contributions docs --list --query="Support" --filter="2020" --match "P1|P2"
+```
