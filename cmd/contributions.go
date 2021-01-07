@@ -22,6 +22,7 @@ func main() {
 	documentQuery := documentsCmd.String("query", "", "")
 	documentFilter := documentsCmd.String("filter", "", "")
 	documentMatch := documentsCmd.String("match", "", "")
+	documentTitle := documentsCmd.String("title", "^(.*?) Support$", "Match Title Page")
 
 	jenkinsCmd := flag.NewFlagSet("jenkins", flag.ExitOnError)
 	jenkinsBranch := jenkinsCmd.String("branch", "", "")
@@ -49,7 +50,7 @@ func main() {
 
 	case "docs":
 		documentsCmd.Parse(os.Args[2:])
-		ShowDocuments(&confFile, documentsList, documentQuery, documentFilter, documentMatch)
+		ShowDocuments(&confFile, documentsList, documentQuery, documentFilter, documentMatch, documentTitle)
 
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
