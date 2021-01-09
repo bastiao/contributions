@@ -28,6 +28,7 @@ type ContentRawResponse struct {
 
 type ContentResponse struct {
 	Title   string             `json:"title"`
+	Path    string             `json:"path"`
 	Content ContentRawResponse `json:"content"`
 }
 

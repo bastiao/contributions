@@ -24,7 +24,8 @@ func matchSequenceStr(strEntry *string, filter *string) bool {
 
 // Management options for documents
 func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuery *string,
-	documentFilter *string, documentFilterBoolean *string, documentTitle *string, documentShowAll *bool) {
+	documentFilter *string, documentFilterBoolean *string, documentTitle *string,
+	documentShowAll *bool, documentsRawRegexContent *string) {
 	fmt.Println("\n⭐ Starting pha-go with documents command.")
 	fmt.Println("\t Options: ")
 	fmt.Println("📃 DocumentList: ", *documentList)
@@ -33,6 +34,7 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 	fmt.Println("📃 Document Match (--match): ", *documentFilterBoolean)
 	fmt.Println("📃 Document Title: (--title)", *documentTitle)
 	fmt.Println("📃 Document Show All (--show-all): ", *documentShowAll)
+	fmt.Println("📃 Document Raw Regex(--raw-regex): ", *documentsRawRegexContent)
 
 	client, err := gonduit.Dial(confFile.PhaConf.Endpoint,
 		&core.ClientOptions{APIToken: confFile.PhaConf.Token})
@@ -46,10 +48,23 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 		matchTitle := reTitle.FindStringSubmatch(v.Attachments.Content.Title)
 
 		if len(matchTitle) > 1 && matchSequenceStr(&matchTitle[1], documentFilterBoolean) {
-			fmt.Println("\t🐊 Customer: ", v.Attachments.Content.Title)
+			if len(*documentsRawRegexContent) == 0 {
+				fmt.Println("\t🐊 Customer: ", v.Attachments.Content.Title)
+			}
 			for _, line := range strings.Split(strings.TrimSuffix(v.Attachments.Content.Content.Raw, "\n"), "\n") {
 				if *documentShowAll {
-					fmt.Println(line)
+					if len(*documentsRawRegexContent) > 1 {
+						reRaw := regexp.MustCompile(*documentsRawRegexContent)
+						matchRaw := reRaw.FindStringSubmatch(line)
+						if len(matchRaw) > 1 {
+							fmt.Println("\t🐊 Path: ", v.Attachments.Content.Path)
+
+							fmt.Println(matchRaw[1])
+						}
+					} else {
+						fmt.Println(line)
+					}
+
 				}
 
 				re := regexp.MustCompile("^## (.*?)$")

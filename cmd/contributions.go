@@ -24,6 +24,7 @@ func main() {
 	documentMatch := documentsCmd.String("match", "", "")
 	documentTitle := documentsCmd.String("title", "^(.*?) Support$", "Match Title Page")
 	documentsShowAll := documentsCmd.Bool("show-all", true, "Show All Cotent")
+	documentsRawRegexContent := documentsCmd.String("raw-regex", "", "Raw Regex")
 
 	jenkinsCmd := flag.NewFlagSet("jenkins", flag.ExitOnError)
 	jenkinsBranch := jenkinsCmd.String("branch", "", "")
@@ -51,7 +52,8 @@ func main() {
 
 	case "docs":
 		documentsCmd.Parse(os.Args[2:])
-		ShowDocuments(&confFile, documentsList, documentQuery, documentFilter, documentMatch, documentTitle, documentsShowAll)
+		ShowDocuments(&confFile, documentsList, documentQuery, documentFilter, documentMatch,
+			documentTitle, documentsShowAll, documentsRawRegexContent)
 
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
