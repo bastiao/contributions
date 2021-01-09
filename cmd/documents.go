@@ -24,7 +24,7 @@ func matchSequenceStr(strEntry *string, filter *string) bool {
 
 // Management options for documents
 func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuery *string,
-	documentFilter *string, documentFilterBoolean *string, documentTitle *string) {
+	documentFilter *string, documentFilterBoolean *string, documentTitle *string, documentShowAll *bool) {
 	fmt.Println("\n⭐ Starting pha-go with documents command.")
 	fmt.Println("\t List: ", *documentList)
 
@@ -45,7 +45,10 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 		if len(matchTitle) > 1 && matchSequenceStr(&matchTitle[1], documentFilterBoolean) {
 			fmt.Println("\t🐊 Customer: ", v.Attachments.Content.Title)
 			for _, line := range strings.Split(strings.TrimSuffix(v.Attachments.Content.Content.Raw, "\n"), "\n") {
-				fmt.Println(line)
+				if *documentShowAll {
+					fmt.Println(line)
+				}
+
 				re := regexp.MustCompile("^## (.*?)$")
 				re2 := regexp.MustCompile("^\\=\\=\\ (.*?) \\=\\=$")
 
