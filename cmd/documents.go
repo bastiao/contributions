@@ -26,10 +26,13 @@ func matchSequenceStr(strEntry *string, filter *string) bool {
 func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuery *string,
 	documentFilter *string, documentFilterBoolean *string, documentTitle *string, documentShowAll *bool) {
 	fmt.Println("\n⭐ Starting pha-go with documents command.")
-	fmt.Println("\t List: ", *documentList)
-
-	fmt.Println("📃 Endpoint: ", confFile.PhaConf.Endpoint)
-	fmt.Println("⌛ Token: ", confFile.PhaConf.Token)
+	fmt.Println("\t Options: ")
+	fmt.Println("📃 DocumentList: ", *documentList)
+	fmt.Println("⌛ Document Query (--query): ", *documentQuery)
+	fmt.Println("📃 documentFilter: (--filter)", *documentFilter)
+	fmt.Println("📃 Document Match (--match): ", *documentFilterBoolean)
+	fmt.Println("📃 Document Title: (--title)", *documentTitle)
+	fmt.Println("📃 Document Show All (--show-all): ", *documentShowAll)
 
 	client, err := gonduit.Dial(confFile.PhaConf.Endpoint,
 		&core.ClientOptions{APIToken: confFile.PhaConf.Token})
