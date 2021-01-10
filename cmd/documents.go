@@ -27,14 +27,14 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 	documentFilter *string, documentFilterBoolean *string, documentTitle *string,
 	documentShowAll *bool, documentsRawRegexContent *string) {
 	fmt.Println("\n⭐ Starting pha-go with documents command.")
-	fmt.Println("\t Options: ")
-	fmt.Println("📃 DocumentList: ", *documentList)
-	fmt.Println("⌛ Document Query (--query): ", *documentQuery)
-	fmt.Println("📃 documentFilter: (--filter)", *documentFilter)
-	fmt.Println("📃 Document Match (--match): ", *documentFilterBoolean)
-	fmt.Println("📃 Document Title: (--title)", *documentTitle)
-	fmt.Println("📃 Document Show All (--show-all): ", *documentShowAll)
-	fmt.Println("📃 Document Raw Regex(--raw-regex): ", *documentsRawRegexContent)
+	fmt.Println("Options: ")
+	fmt.Println("📃 Document list: ", *documentList)
+	fmt.Println("🏧 Document query (--query): ", *documentQuery)
+	fmt.Println("🏧 Document filter: (--filter)", *documentFilter)
+	fmt.Println("🏧 Document match (--match): ", *documentFilterBoolean)
+	fmt.Println("🏧 Document title: (--title)", *documentTitle)
+	fmt.Println("🏧 Document show all (--show-all): ", *documentShowAll)
+	fmt.Println("🏧 Document Raw Regex(--raw-regex): ", *documentsRawRegexContent)
 
 	client, err := gonduit.Dial(confFile.PhaConf.Endpoint,
 		&core.ClientOptions{APIToken: confFile.PhaConf.Token})
@@ -58,7 +58,7 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 						matchRaw := reRaw.FindStringSubmatch(line)
 						if len(matchRaw) > 1 {
 							fmt.Println("\t🐊 Path: ", v.Attachments.Content.Path)
-							fmt.Println("\t🐊 ", matchRaw[1])
+							fmt.Println("\tℹ ", matchRaw[1])
 						}
 					} else {
 						fmt.Println(line)
