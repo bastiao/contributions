@@ -58,8 +58,7 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 						matchRaw := reRaw.FindStringSubmatch(line)
 						if len(matchRaw) > 1 {
 							fmt.Println("\t🐊 Path: ", v.Attachments.Content.Path)
-
-							fmt.Println(matchRaw[1])
+							fmt.Println("\t🐊 ", matchRaw[1])
 						}
 					} else {
 						fmt.Println(line)
