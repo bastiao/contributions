@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-
+    "os"
+    "bufio"
 	"github.com/bastiao/contributions/config"
 	"github.com/bastiao/contributions/documents"
 	"github.com/uber/gonduit"
@@ -84,4 +85,57 @@ func ShowDocuments(confFile *config.ConfGoPath, documentList *bool, documentQuer
 			}
 		}
 	}
+}
+
+
+
+// Edit Documents
+func EditDocuments(confFile *config.ConfGoPath, documentsId *string) {
+	fmt.Println("\n⭐ Starting pha-go with edit documents command.")
+	fmt.Println("Options: ")
+	fmt.Println("📃 Document id: ", *documentsId)
+	
+	client, err := gonduit.Dial(confFile.PhaConf.Endpoint,
+		&core.ClientOptions{APIToken: confFile.PhaConf.Token})
+	_ = err
+	client.Connect()
+
+	docs := documents.LookForDocument(client, documentsId)
+	for _, v := range docs.Data {
+		
+		fmt.Println("📃 Document id: ", v.Attachments.Content.Title)
+		ReadTemplate("support/template.txt")
+
+
+	}
+
+}
+
+func ReadTemplate(pathTemplate string) string {
+
+
+    f, err := os.Open(pathTemplate)
+
+    if err != nil {
+        fmt.Println(err)
+     }
+
+    defer f.Close()
+
+    scanner := bufio.NewScanner(f)
+	var content string 
+	content = ""
+    for scanner.Scan() {
+
+        content = content + scanner.Text() + "\n"
+		
+    }
+	fmt.Println(content)
+
+
+    if err := scanner.Err(); err != nil {
+        fmt.Println(err)
+    }
+	return content
+
 }

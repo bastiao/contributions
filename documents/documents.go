@@ -7,6 +7,12 @@ import (
 	"github.com/uber/gonduit/requests"
 )
 
+type WikiSlugRequest struct {
+	Slug    string   `json:"slug"`
+	Content    string   `json:"content"`
+}
+
+
 type ConstraintsRequest struct {
 	Statuses []string `json:"statuses"`
 	Query    string   `json:"query"`
@@ -41,6 +47,10 @@ type PhidDocumentResponse struct {
 	Phid        string              `json:"phid"`
 	Attachments AttachmentsResponse `json:"attachments"`
 }
+type WikiPhidDocumentResponse struct {
+	Phid        string              `json:"phid"`
+}
+
 
 type PhidDocumentDataResponse struct {
 	Data []PhidDocumentResponse `json:"data"`
@@ -64,6 +74,24 @@ func LookForDocument(client *gonduit.Conn, documentQuery *string) PhidDocumentDa
 	var res PhidDocumentDataResponse
 
 	err1 := client.Call("phriction.document.search", req, &res)
+	if err1 != nil {
+		log.Fatal("Error: ", err1)
+	}
+	return res
+}
+
+
+// Edit Document
+func EditDoc(client *gonduit.Conn, documentQuery *string, content *string, slug *string) WikiPhidDocumentResponse {
+
+	req := &WikiSlugRequest{
+		Slug:    *slug,
+		Content: *content,
+	}
+	
+	var res WikiPhidDocumentResponse
+
+	err1 := client.Call("phriction.edit", req, &res)
 	if err1 != nil {
 		log.Fatal("Error: ", err1)
 	}

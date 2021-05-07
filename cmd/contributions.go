@@ -19,6 +19,8 @@ func main() {
 
 	documentsCmd := flag.NewFlagSet("docs", flag.ExitOnError)
 	documentsList := documentsCmd.Bool("list", false, "false")
+	documentId := documentsCmd.String("id", "", "")
+
 	documentQuery := documentsCmd.String("query", "", "")
 	documentFilter := documentsCmd.String("filter", "", "")
 	documentMatch := documentsCmd.String("match", "", "")
@@ -54,7 +56,9 @@ func main() {
 		documentsCmd.Parse(os.Args[2:])
 		ShowDocuments(&confFile, documentsList, documentQuery, documentFilter, documentMatch,
 			documentTitle, documentsShowAll, documentsRawRegexContent)
-
+	case "edocs":
+		documentsCmd.Parse(os.Args[2:])
+		EditDocuments(&confFile, documentId)
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
 		JenkinsAction(&confFile, jenkinsBranch, jenkinsRepo, jenkinsParams, revision)
