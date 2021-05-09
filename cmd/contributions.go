@@ -19,6 +19,8 @@ func main() {
 
 	documentsCmd := flag.NewFlagSet("docs", flag.ExitOnError)
 	documentsList := documentsCmd.Bool("list", false, "false")
+	documentsAsk := documentsCmd.Bool("ask", false, "false")
+
 	documentId := documentsCmd.String("id", "", "")
 
 	documentQuery := documentsCmd.String("query", "", "")
@@ -58,7 +60,7 @@ func main() {
 			documentTitle, documentsShowAll, documentsRawRegexContent)
 	case "edocs":
 		documentsCmd.Parse(os.Args[2:])
-		EditDocuments(&confFile, documentId)
+		EditDocuments(&confFile, documentId, documentsAsk)
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
 		JenkinsAction(&confFile, jenkinsBranch, jenkinsRepo, jenkinsParams, revision)
