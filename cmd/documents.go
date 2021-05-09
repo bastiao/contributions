@@ -160,7 +160,7 @@ func EditDocuments(confFile *config.ConfGoPath, documentsId *string, documentsAs
 	
 	for k, v := range customers {
 		if (k == *documentsId) {
-			fmt.Printf("%v -> name: %v, \n", k, v.Slug, v.Team)
+			fmt.Printf("%v -> name: %v  : %v, \n", k, v.Slug, v.Team)
 			docs := documents.LookForDocumentByPath(client, &v.Slug)
 			for _, v2 := range docs.Data {
 				
