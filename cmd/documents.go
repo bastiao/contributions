@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"bufio"
     "os"
+	"time"
 	"github.com/bastiao/contributions/config"
 	"github.com/bastiao/contributions/documents"
 	"github.com/uber/gonduit"
@@ -128,6 +129,11 @@ func EditDocuments(confFile *config.ConfGoPath, documentsId *string, documentsAs
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Enter date (e.g. 2021-05-08): ")
     	data["date"], _ = reader.ReadString('\n')
+		if (data["date"]=="\n"){
+			currentTime := time.Now()
+			data["date"] = currentTime.Format("2006-01-02")
+		}
+
 		fmt.Print("Enter Task (e.g. Email, SMS, Task): ")
 		var taskStr string
     	taskStr, _ = reader.ReadString('\n')
