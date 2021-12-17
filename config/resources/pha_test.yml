@@ -8,3 +8,8 @@ jenkins:
     username: example
     token: 34567890
     pipeline: "testingJenkins" # Pipeline by default 
+
+imap:
+    address: "imap.gmail.com:993"
+    username: "my-test-email@gmail.com"
+    password:  "my-dummy-password"
