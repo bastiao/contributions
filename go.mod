@@ -5,7 +5,7 @@ go 1.14
 require (
 	9fans.net/go v0.0.2
 	github.com/bndr/gojenkins v1.0.1
-	github.com/emersion/go-imap v1.2.0 // indirect
+	github.com/emersion/go-imap v1.2.0
 	github.com/gin-gonic/gin v1.6.3 // indirect
 	github.com/karlseguin/typed v1.1.7 // indirect
 	github.com/stretchr/testify v1.6.1
