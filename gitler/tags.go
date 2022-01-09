@@ -1,6 +1,7 @@
 package gitler
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -30,7 +31,11 @@ func ParseTag(path, line string, filter string) (*Tag, error) {
 		tagStr := strings.ReplaceAll(tagTmp[1], ")'", "")
 		tagStr = strings.Split(tagStr, ",")[0]
 		fmt.Println("Tag: ", tagStr)
+		// TODO: parse it
+		tag := &Tag{}
+		return tag, nil
 	}
+
 	tag := &Tag{}
-	return tag, nil
+	return tag, errors.New("No tag for filter or available")
 }

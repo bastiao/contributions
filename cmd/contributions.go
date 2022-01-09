@@ -40,6 +40,7 @@ func main() {
 	// Gitler
 	gitlerCmd := flag.NewFlagSet("gitler", flag.ExitOnError)
 	gitlerCsvEntryFile := gitlerCmd.String("csv-file", "", "")
+	gitlerExportFile := gitlerCmd.String("export-file", "", "")
 	gitlerGrep := gitlerCmd.String("grep", "", "")
 
 	if len(os.Args) < 2 {
@@ -72,7 +73,7 @@ func main() {
 	case "gitler":
 		// Git Iterations with multiple repositories
 		gitlerCmd.Parse(os.Args[2:])
-		GitlerIteration(&confFile, gitlerCsvEntryFile, gitlerGrep)
+		GitlerIteration(&confFile, gitlerCsvEntryFile, gitlerGrep, gitlerExportFile)
 
 	default:
 		fmt.Println("Error: not available.")

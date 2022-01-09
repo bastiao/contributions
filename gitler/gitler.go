@@ -3,13 +3,15 @@ package gitler
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
 // Git Clone and Counter
-func GitCloneAndCounter(gitRepo *string, grep *string) string {
+func GitCloneAndCounter(gitRepo *string, grep *string, gitlerExportFile *string) string {
 	if err := ensureDir(".tmp"); err != nil {
 		fmt.Println("Directory creation failed with error: " + err.Error())
 		os.Exit(1)
@@ -37,14 +39,32 @@ func GitCloneAndCounter(gitRepo *string, grep *string) string {
 	// The last split is just an empty string, right?
 	lineBytes = lineBytes[0 : len(lineBytes)-1]
 	tags := make([]*Tag, len(lineBytes))
-
+	var i int
+	i = 0
 	for x := 0; x < len(lineBytes); x++ {
 		tag, tagErr := ParseTag(".tmp/"+dirName, string(lineBytes[x]), *grep)
-		if tagErr != nil {
-			return "error"
+		if tagErr == nil {
+			// No error
+			tags[x] = tag
+			i++
 		}
-		tags[x] = tag
+
 	}
+	f, err := os.OpenFile(*gitlerExportFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer f.Close()
+
+	_, err2 := f.WriteString(dirName + ", " + strconv.Itoa(i) + "\n")
+
+	if err2 != nil {
+		log.Fatal(err2)
+	}
+
+	fmt.Println("Number of tags: ", i)
 
 	//fmt.Println("out:", myString)
 

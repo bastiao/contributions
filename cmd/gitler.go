@@ -30,7 +30,7 @@ func ReadFileWithRepos(repos string) string {
 }
 
 // Command Iterations for Counter
-func GitlerIteration(confFile *config.ConfGoPath, csvFile *string, grep *string) string {
+func GitlerIteration(confFile *config.ConfGoPath, csvFile *string, grep *string, gitlerExportFile *string) string {
 	// Try to count like this
 	//  git log --tags --simplify-by-decoration --pretty="format:%ai %d"|grep tag|grep 2021 | wc -l
 	fmt.Println("Entering in counter", *csvFile)
@@ -40,8 +40,7 @@ func GitlerIteration(confFile *config.ConfGoPath, csvFile *string, grep *string)
 	//fmt.Println("{}", reposContent)
 
 	for _, line := range strings.Split(reposContent, "\n") {
-		fmt.Println("Repo {}", line)
-		gitler.GitCloneAndCounter(&line, grep)
+		gitler.GitCloneAndCounter(&line, grep, gitlerExportFile)
 	}
 
 	return reposContent
