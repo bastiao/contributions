@@ -2,13 +2,12 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/bastiao/contributions/config"
+	"github.com/bastiao/contributions/gitler"
 )
 
 // Read List of Repositories
@@ -31,7 +30,7 @@ func ReadFileWithRepos(repos string) string {
 }
 
 // Command Iterations for Counter
-func GitlerIteration(confFile *config.ConfGoPath, csvFile *string) string {
+func GitlerIteration(confFile *config.ConfGoPath, csvFile *string, grep *string) string {
 	// Try to count like this
 	//  git log --tags --simplify-by-decoration --pretty="format:%ai %d"|grep tag|grep 2021 | wc -l
 	fmt.Println("Entering in counter", *csvFile)
@@ -42,36 +41,8 @@ func GitlerIteration(confFile *config.ConfGoPath, csvFile *string) string {
 
 	for _, line := range strings.Split(reposContent, "\n") {
 		fmt.Println("Repo {}", line)
-		GitClone(&line)
+		gitler.GitCloneAndCounter(&line, grep)
 	}
 
 	return reposContent
-}
-func GitClone(gitRepo *string) string {
-	if err := ensureDir(".tmp"); err != nil {
-		fmt.Println("Directory creation failed with error: " + err.Error())
-		os.Exit(1)
-	}
-	cmd := exec.Command("git", "clone", *gitRepo)
-	cmd.Dir = ".tmp"
-	_, _ = cmd.Output()
-	return ""
-}
-func ensureDir(dirName string) error {
-	err := os.Mkdir(dirName, os.ModeDir)
-	if err == nil {
-		return nil
-	}
-	if os.IsExist(err) {
-		// check that the existing path is a directory
-		info, err := os.Stat(dirName)
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			return errors.New("path exists but is not a directory")
-		}
-		return nil
-	}
-	return err
 }

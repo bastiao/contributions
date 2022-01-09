@@ -40,6 +40,7 @@ func main() {
 	// Gitler
 	gitlerCmd := flag.NewFlagSet("gitler", flag.ExitOnError)
 	gitlerCsvEntryFile := gitlerCmd.String("csv-file", "", "")
+	gitlerGrep := gitlerCmd.String("grep", "", "")
 
 	if len(os.Args) < 2 {
 		fmt.Println("\n🚒 pha-go does not recognize your command. ")
@@ -71,7 +72,7 @@ func main() {
 	case "gitler":
 		// Git Iterations with multiple repositories
 		gitlerCmd.Parse(os.Args[2:])
-		GitlerIteration(&confFile, gitlerCsvEntryFile)
+		GitlerIteration(&confFile, gitlerCsvEntryFile, gitlerGrep)
 
 	default:
 		fmt.Println("Error: not available.")
