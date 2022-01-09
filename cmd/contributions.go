@@ -37,6 +37,10 @@ func main() {
 	jenkinsRepo := jenkinsCmd.String("repo", "", "")
 	jenkinsParams := jenkinsCmd.String("params-ci", "", "")
 
+	// Gitler
+	gitlerCmd := flag.NewFlagSet("gitler", flag.ExitOnError)
+	gitlerCsvEntryFile := gitlerCmd.String("csv-file", "", "")
+
 	if len(os.Args) < 2 {
 		fmt.Println("\n🚒 pha-go does not recognize your command. ")
 		fmt.Println("It is expecting 'arc', 'jenkins' or 'help' subcommands.")
@@ -64,6 +68,10 @@ func main() {
 	case "jenkins":
 		jenkinsCmd.Parse(os.Args[2:])
 		JenkinsAction(&confFile, jenkinsBranch, jenkinsRepo, jenkinsParams, revision)
+	case "gitler":
+		// Git Iterations with multiple repositories
+		gitlerCmd.Parse(os.Args[2:])
+		GitlerIteration(&confFile, gitlerCsvEntryFile)
 
 	default:
 		fmt.Println("Error: not available.")
