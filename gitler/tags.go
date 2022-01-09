@@ -24,9 +24,9 @@ func (tag *Tag) String() string {
 // Parse Git Tag
 func ParseTag(path, line string, filter string) (*Tag, error) {
 	if contains(strings.Split(filter, "|"), line) && // contains filter
-		strings.Contains(line, "(tag: ") { // also is also a git tag
+		strings.Contains(line, "tag: ") { // also is also a git tag
 		// Contains the filters, so let's parse
-		tagTmp := strings.Split(line, "(tag: ")
+		tagTmp := strings.Split(line, "tag: ")
 		tagStr := strings.ReplaceAll(tagTmp[1], ")'", "")
 		tagStr = strings.Split(tagStr, ",")[0]
 		fmt.Println("Tag: ", tagStr)
