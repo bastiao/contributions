@@ -3,7 +3,6 @@ package config
 import (
 	"io/ioutil"
 	"log"
-
 	"gopkg.in/yaml.v2"
 )
 
@@ -11,11 +10,14 @@ import (
 * This is the module to load configuration
  */
 
+// Configuration for Phabricator
 type ConfPha struct {
 	Endpoint string `yaml:"endpoint"`
 	Token    string `yaml:"token"`
 	Repo     string `yaml:"repo"`
 }
+
+// Configuration for Jenkins
 type ConfJenkins struct {
 	Endpoint string `yaml:"endpoint"`
 	Username string `yaml:"username"`
@@ -23,9 +25,18 @@ type ConfJenkins struct {
 	Pipeline string `yaml:"pipeline"`
 }
 
+// Configurations for IMAP
+type ConfImap struct {
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	Address string `yaml:"address"`
+}
+
+// Configurations General
 type ConfGoPath struct {
 	PhaConf    ConfPha     `yaml:"phabricator"`
 	PhaJenkins ConfJenkins `yaml:"jenkins"`
+	PhaImap    ConfImap    `yaml:"imap"`
 }
 
 // Load from File
